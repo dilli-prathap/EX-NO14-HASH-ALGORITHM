@@ -54,6 +54,6 @@ int main() {
 ```
 
 ## Output:
-
+![MAC Output](Screenshot%202026-03-16%20094433.png)
 ## Result:
 The program is executed successfully.
