@@ -31,29 +31,46 @@ To implement HASH ALGORITHM
 #include <stdio.h>
 #include <string.h>
 
+void computeSimpleHash(const char *message, unsigned char *hash) {
+    unsigned char temp = 0;
+
+    for (int i = 0; message[i] != '\0'; i++) {
+        temp = temp ^ message[i];  
+        temp += message[i];        
+    }
+    
+    *hash = temp;
+}
+
 int main() {
-    char message[100];
-    int i;
-    int hash = 0;
+    char message[256];     
+    unsigned char hash;    
+    char receivedHash[3];   
 
     printf("Enter the message: ");
     scanf("%s", message);
 
-    // Simple hash calculation
-    for(i = 0; i < strlen(message); i++) {
-        hash = hash + message[i];
+    computeSimpleHash(message, &hash);
+
+    printf("Computed Hash (in hex): %02x\n", hash);
+
+    printf("Enter the received hash (in hex): ");
+    scanf("%s", receivedHash);
+
+    unsigned int receivedHashValue;
+    sscanf(receivedHash, "%02x", &receivedHashValue);
+
+    if (hash == receivedHashValue) {
+        printf("Hash verification successful. Message is unchanged.\n");
+    } else {
+        printf("Hash verification failed. Message has been altered.\n");
     }
-
-    hash = hash % 100;   // limit hash value
-
-    printf("Original Message: %s\n", message);
-    printf("Hash Value: %d\n", hash);
 
     return 0;
 }
 ```
-
 ## Output:
-![MAC Output](Screenshot%202026-03-16%20094433.png)
+<img width="1399" height="895" alt="Screenshot 2026-03-17 140501" src="https://github.com/user-attachments/assets/6d6da7e4-4f05-4a0e-968c-acb7b4cfa37d" />
+
 ## Result:
 The program is executed successfully.
